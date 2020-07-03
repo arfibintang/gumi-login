@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import './Login.scss'
 import Button from '../../../components/atoms/Button';
 import { loginUserApi } from "../../../config/redux/action";
 
@@ -20,12 +21,14 @@ class Login extends Component{
         const {history} = this.props;
         const res = await this.props.loginAPI({ email, password}).catch(err => err);
         if (res) {
-            console.log('Login Success');
+            console.log('Login Success', JSON.stringify(res));
+
+            localStorage.setItem('userData', JSON.stringify(res))
             this.setState({
                 email:'',
                 password:''
             })
-            history.push('/')
+            history.push('/')    
         }else {
             console.log('login failed')
         }
@@ -39,7 +42,7 @@ class Login extends Component{
                 <p className="auth-title">Login Page</p>
                 <input className='input' id='email' placeholder='Email' type='text' onChange={this.handleChangeText} value={this.state.email} />
                 <input className='input' id='password' placeholder='Password' type='password' onChange={this.handleChangeText} value={this.state.password} />
-                <Button onClick={this.handleLoginSubmit} title="Login" loading={this.props.isLoading} />
+                <Button onClick={this.handleLoginSubmit} title="Mikail" loading={this.props.isLoading} />
 
             </div>
             {/* <button>Go to Dashboard</button> */}
